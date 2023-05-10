@@ -1,0 +1,155 @@
+<!-- heredamos de la plantilla base-->
+
+{% extends "postgradoApp/base.html" %}
+<!-- cargamos toda la carpeta static -->
+{% load static %}
+
+{% block content %}
+
+
+
+<div class="card-body">
+
+    <div class="sb-nav-link-icon">
+        <h3><i class="far fa-id-card"></i> Designación de fecha y hora para acto de Sustentación</h3>
+    </div>
+
+    <p class="card-text">
+       
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <p class="card-text" style="color:rgba(4, 32, 67, 0.921);">
+                    <b><u>Documentos requeridos</u></b><br>
+                    * R-0409 Carta externa (designación de tribunal examinador)
+                </p> 
+                <form action="{% url 'usuario:checklista7' %}" method="POST">
+                    {% csrf_token %}
+
+
+                    <input type="hidden" name="fecha" id="fecha">
+                    <input type="hidden" name="usuario"
+                        value="{{ user.nombre_usuario }} {{ user.paterno }} {{ user.materno }}">
+
+                        <table class="table table-sm ">
+             
+                            <tbody>
+                    
+                                <tr >
+                         
+                                    <td>Actividad: </td>
+                                    <td><input type="text" name="descripcion" class="form-control" value="Designación de fecha para sustentacion de Tema - "></td>
+                                    
+                                  </tr>
+                              <tr>
+                              
+                                <td> </td>
+                                <td></td>
+                               
+                              </tr>
+                    
+                              <tr>
+                               
+                                <td><button type="button" id="marcarTodo" class="btn btn-outline-primary btn-sm">Marcar</button>
+                                    <button type="button" id="desmarcarTodo" class="btn btn-outline-success btn-sm">Desmarcar</button>
+                                </td>
+                                <td><button type="submit" class="btn btn-primary">Enviar actividad</button></td>
+                              </tr>
+                            </tbody>
+                          </table>  
+                  
+                    <table name="f1" id="data" class="table table-striped table-responsive">
+
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="size"> Designar Fecha</div>
+                                    <th class="header" scope="col">Tribunal</th>
+                                </th>
+                                <th>
+                                    <div class="size"> chek</div>
+                                </th>
+                                
+                                <th class="header" scope="col">Fecha/hora&nbsp;de&nbsp;sustentación</th>
+                               
+
+                                <th class="header" scope="col">Nombre</th>
+                                <th class="header" scope="col">Apellido&nbsp;Paterno</th>
+                                <th class="header" scope="col">Apellido&nbsp;Materno</th>
+                                <th class="header" scope="col">Tribunal&nbsp;Examinador</th>
+
+                                
+
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody_users">
+                            {% for usuario in actividades %}
+
+                            <tr>
+                                <td><button type="button" onclick="abrir_modal('{% url 'usuario:fechasustentacion' usuario.id_maestrante %}')"
+                                
+                                    class="btn btn-warning"><i class="fa-solid fa-pen"></i></button></td>
+                                    <td>
+                                    
+                                        <button type="button" onclick="abrir_modal_tribunal('{% url 'usuario:habilitarmaestrantetribunal' usuario.id_maestrante %}')"
+                                    
+                                        class="btn btn-warning"><i class="fa-solid fa-pen"></i></button></td>
+                                <td><input type="checkbox" name="checks[]" value="{{ usuario.id_maestrante }}"></td>
+                                <td>{{ usuario.fecha_sustentacion }} {{ usuario.hora_sustentacion }}</td>
+                             
+                                <td>{{ usuario.user.nombre_usuario }}</td>
+                                <td>{{ usuario.user.paterno }}</td>
+                                <td>{{ usuario.user.materno }}</td>
+                                <td>{{ usuario.tribunal }}</td>
+                        
+                              
+                            </tr>
+
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</div>
+
+
+
+
+<div class="modal fade" id="edicion" role="dialog">
+
+</div>
+<div class="modal fade" id="eliminar" role="dialog">
+
+</div>
+
+{% block extrajs %}
+<script src="{% static 'lib/js/check.js' %}"></script>
+<script src="{% static 'lib/js/fecha.js' %}"></script>
+<script src="{% static 'lib/js/data.js' %}"></script>
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+    function abrir_modal(url) {
+        $('#edicion').load(url, function () {
+            $(this).modal('show');
+        });
+    }
+    function abrir_modal_tribunal(url) {
+        $('#eliminar').load(url, function () {
+            $(this).modal('show');
+        });
+    }
+
+
+</script>
+
+
+{% endblock extrajs %}
+
+{% endblock %}

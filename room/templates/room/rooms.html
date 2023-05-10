@@ -1,0 +1,35 @@
+{% extends "postgradoApp/base.html" %}
+
+{% block content %}
+<div class="card-body">
+
+    <p class="card-text">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+           
+            <th scope="col">Sala de equipo</th>
+           
+            <th scope="col">Opción</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+            {% for room in rooms %}
+            {% if user.maestrante.id_maestrante == room.idmaestrante or user.docente.id_docente == room.iddocente %}
+            <tr>
+            <td><a href="{% url 'room' room.slug %}" class="btn btn-primary">{{ room.name }}</a></td>
+            <td></td>
+        </tr>                 
+                    {% endif %}
+            {% endfor %}          
+            
+            
+         
+         
+         
+        </tbody>
+      </table>
+    </p>
+</div>
+{% endblock %}

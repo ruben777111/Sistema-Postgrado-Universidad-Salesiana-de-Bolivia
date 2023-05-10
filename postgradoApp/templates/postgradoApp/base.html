@@ -1,0 +1,332 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>SISTEMA POSTGRADO USB</title>
+    <!-- Bootstrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous" />
+
+
+    <!-- DataTable -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <link href="{% static 'lib/css/styles.css' %}" rel="stylesheet" />
+    
+
+    <style>
+        .messages {
+            height: 400px;
+            overflow-y: auto;
+        }
+    </style>
+    <style type="text/css">
+        thead tr th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: #ffffff;
+        }
+
+        .table-responsive {
+            height: 200px;
+            overflow: scroll;
+        }
+    </style>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+
+        <img src="{% static 'lib/img/logo3.png' %}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+        
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+       <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0 " style="color:#eaf0f0d6";>{{user.nombre_usuario}} {{user.paterno}} {{user.materno}}</div>
+       
+      
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Configuración</a></li>
+                    <li><a class="dropdown-item" href="#!">Actividad</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="{% url 'logout' %}">Cerrar sesión</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading text-Light ">GENERAL</div>
+
+                        <!------------ Usuarios Administradores ---------------->
+                        {% if user.tipo_usuario == None %}
+                        <a class="nav-link" href="{% url 'usuario:listar_docente'  %}">
+                            <div class="sb-nav-link-icon"><i class="far fa-address-card"></i></div>
+                            Docentes
+                        </a>
+                        <a class="nav-link" href="{% url 'usuario:listar_guia'  %}">
+                            <div class="sb-nav-link-icon"><i class="far fa-address-card"></i></div>
+                            Docentes guia
+                        </a>
+                        <a class="nav-link" href="{% url 'usuario:listar_revisor'  %}">
+                            <div class="sb-nav-link-icon"><i class="far fa-address-card"></i></div>
+                            Docentes revisor
+                        </a>
+                        <a class="nav-link" href="{% url 'usuario:listar_maestrante'  %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user-graduate  text-Light "></i></div>
+                            Maestrantes
+                        </a>
+
+
+
+
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts4">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Plantel Administrativo
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts4" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{% url 'usuario:listar_tecnico'  %}">
+                                    <div class="sb-nav-link-icon"><i class="far fa-address-card"></i></div>
+                                    Técnico de Postgrado
+                                </a>
+                                <a class="nav-link" href="{% url 'usuario:listar_investigacion'  %}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-users  text-Light "></i></div>
+                                    Coordinación de Investigación
+
+                                </a>
+                                <a class="nav-link" href="{% url 'usuario:listar_postgrado'  %}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-user-graduate  text-Light "></i>
+                                    </div>
+                                    Coordinación de Postgrado
+                                </a>
+                                <a class="nav-link" href="{% url 'usuario:listar_usuario'  %}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-user-cog  text-Light "></i></div>
+                                    Administradores
+                                </a>
+                            </nav>
+                        </div>
+
+
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Equipos
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{ url 'usuario:listar_maestrante_guia'  %}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-user-cog  text-Light "></i></div>
+                                    Maestrante - Docente Guia
+                                </a>
+                                <a class="nav-link" href="{ url 'usuario:listar_maestrante_revisor'  %}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-user-cog  text-Light "></i></div>
+                                    Maestrante - Docente Revisor
+                                </a>
+                                <a class="nav-link" href="{% url 'usuario:listar_tribunal'  %}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-user-cog  text-Light "></i></div>
+                                    Maestrante - Tribunal
+                                </a>
+                            </nav>
+                        </div>
+
+                        {% endif %}
+
+                        <!------------Actividades ---------------->
+
+                        {% if user.tipo_usuario == 3 %}
+                        <a class="nav-link" href="{% url 'usuario:act1'  %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users  text-Light "></i></div>
+                            Recepción de solicitud de inducción  
+
+                        </a>                     
+                        {% endif %}
+
+                        {% if user.tipo_usuario == 3 or user.tipo_usuario == 4 %}
+                        <a class="nav-link" href="{% url 'usuario:act2'  %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users  text-Light "></i></div>
+                            Información sobre proceso de Tesis 
+
+                        </a>                     
+                        {% endif %}
+
+                        {% if user.tipo_usuario == 3 or user.tipo_usuario == 4 %}
+                        <a class="nav-link" href="{% url 'usuario:act3'  %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users  text-Light "></i></div>
+                            Programación de actividad
+                        </a>                     
+                        {% endif %}
+
+                        {% if user.tipo_usuario == 2 or user.tipo_usuario == 3 %}
+                        <a class="nav-link" href="{% url 'usuario:act4'  %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users  text-Light "></i></div>
+                            Desisgnación de docente guía  
+
+                        </a>
+                     
+                        {% endif %}
+
+                        {% if user.tipo_usuario == 2 or user.tipo_usuario == 3 %}
+                        <a class="nav-link" href="{% url 'usuario:act5'  %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users  text-Light "></i></div>
+                            Recepción de documentos  
+
+                        </a>
+                     
+                        {% endif %}
+                
+                        {% if user.tipo_usuario == 3 %}
+                        <a class="nav-link" href="{% url 'usuario:act6'  %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users  text-Light "></i></div>
+                            Programación de acto de sustentación  
+
+                        </a>
+                     
+                        {% endif %}
+                        {% if user.tipo_usuario == 5 %}
+                        <a class="nav-link" href="{% url 'usuario:act7'  %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users  text-Light "></i></div>
+                            Designación de fecha/hora para sustentación   
+
+                        </a>
+                     
+                        {% endif %}
+    
+                        {% if user.tipo_usuario == 3 or user.tipo_usuario == 2 %}
+                        <a class="nav-link" href="{% url 'usuario:act8'  %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users  text-Light "></i></div>
+                            Acta de sustentación
+
+                        </a>
+                     
+                        {% endif %}
+
+                      
+                        {% if user.tipo_usuario == 1 or user.tipo_usuario == 3 %}
+                        <a class="nav-link" href="{% url 'usuario:actividades'  %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users  text-Light "></i></div>
+                            Actividades maestrante  
+
+                        </a>
+                        <a class="nav-link" href="{% url 'usuario:cronograma'  %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users  text-Light "></i></div>
+                           Cronograma
+
+                        </a>
+                        {% endif %}
+                        <a class="nav-link" href="{% url 'rooms'  %}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users  text-Light "></i></div>
+                            Chat  
+
+                        </a>
+                        
+                            <a class="nav-link" href="{% url 'documento:listar_documento'  %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-user-cog  text-Light "></i></div>
+                                Documentos de apoyo  
+                            </a>
+                            <a class="nav-link" href="{% url 'video:listar_video'  %}">
+                                <div class="sb-nav-link-icon"><i class="fas fa-user-cog  text-Light "></i></div>
+                                Videos de apoyo  
+                            </a>
+                       
+
+             
+                        <!---------------------------->
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="{% url 'documento:listar_documento'  %}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-user-cog  text-Light "></i></div>
+                                    Documentos de apoyo  
+                                </a>
+                                <a class="nav-link" href="{% url 'video:listar_video'  %}">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-user-cog  text-Light "></i></div>
+                                    Video de apoyo  
+                                </a>
+                            </nav>
+                        </div>
+
+                    <a class="nav-link" href="{ url 'usuario:listar_maestrante_guia'  %}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-user-cog  text-Light "></i></div>
+                        Maestrante - Docente Guia
+                    </a>
+           
+            </nav>
+        </div>
+
+
+
+
+        <!-- CONTENIDO DE LA PAGINA-->
+        <div id="layoutSidenav_content">
+            {% block content%}
+
+            {% endblock %}
+        </div>
+    </div>
+
+
+    <!-- Campo para js-->
+    <!-- Bootstrap-->
+
+    <!-- Bootstrap-->
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/+esm"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- DataTable -->
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <!-- Custom JS -->
+
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+
+    <script src="{% static 'lib/js/scripts.js' %}"></script>
+
+    <script src="{% static 'lib/js/guia/guia.js' %}"></script>
+    <script src="{% static 'lib/js/layout.js' %}"></script>
+    <!-- Alertas -->
+
+  
+    
+    {% block extrajs %}
+    {% endblock extrajs %}
+    {% block scripts %}
+    {% endblock %}
+</body>
+
+</html>

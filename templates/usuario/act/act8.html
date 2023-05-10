@@ -1,0 +1,161 @@
+<!-- heredamos de la plantilla base-->
+
+{% extends "postgradoApp/base.html" %}
+<!-- cargamos toda la carpeta static -->
+{% load static %}
+
+{% block content %}
+
+
+
+<div class="card-body">
+
+    <div class="sb-nav-link-icon">
+        <h3><i class="far fa-id-card"></i> Procedencia o improcedencia del Tema presentado</h3>
+    </div>
+
+    <p class="card-text">
+       
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <p class="card-text" style="color:rgba(4, 32, 67, 0.921);">
+                    <b><u>Documentos requeridos</u></b><br>
+                    * R-0229 Acta de sustentación del tema de investigación de Tesis<br>
+                    * R-0817 Hoja de evaluación de la temática del proyecto de tesis
+
+                </p> 
+                <form action="{% url 'usuario:checklista8' %}" method="POST">
+                    {% csrf_token %}
+
+
+                    <input type="hidden" name="fecha" id="fecha">
+                    <input type="hidden" name="usuario"
+                        value="{{ user.nombre_usuario }} {{ user.paterno }} {{ user.materno }}">
+
+                        <table class="table table-sm ">
+             
+                            <tbody>
+                    
+                                <tr >
+                         
+                                    <td>Actividad: </td>
+                                    <td><input type="text" name="descripcion" class="form-control" value="El tribunal dictaminó que el tema"></td>
+                                    
+                                  </tr>
+                              <tr>
+                              
+                                <td> </td>
+                                <td></td>
+                               
+                              </tr>
+                    
+                              <tr>
+                               
+                                <td><button type="button" id="marcarTodo" class="btn btn-outline-primary btn-sm">Marcar</button>
+                                    <button type="button" id="desmarcarTodo" class="btn btn-outline-success btn-sm">Desmarcar</button>
+                                </td>
+                                <td><button type="submit" class="btn btn-primary">Enviar actividad</button></td>
+                              </tr>
+                            </tbody>
+                          </table>  
+                  
+                    <table name="f1" id="data" class="table table-striped table-responsive">
+
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="size"> Dictamen</div>
+                                </th>
+                                <th>
+                                    <div class="size"> chek</div>
+                                </th>
+                                <th class="header" scope="col">ok</th>
+                                <th class="header" scope="col">Av_tesis</th>
+
+                                <th class="header" scope="col">Nombre</th>
+                                <th class="header" scope="col">Apellido&nbsp;Paterno</th>
+                                <th class="header" scope="col">Apellido&nbsp;Materno</th>
+                             
+                                
+
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody_users">
+                            {% for usuario in actividades %}
+
+                            <tr>
+
+                                <td>
+                                    {% if procedencia_tema == None %}
+                                    <a href="{% url 'usuario:improcedenciatema' usuario.id_maestrante %}" class="btn btn-danger"><i class="far fa-times-circle"></i></a>
+                                    <a href="{% url 'usuario:procedenciatema' usuario.id_maestrante %}" class="btn btn-success"><i class="far fa-check-circle"></i></a>
+                                       
+                                   
+                                    {% else %} 
+                                    marcado
+                                   {% endif %}
+                                </td>
+                                {% if procedencia_tema == None %}
+                                <td><input type="checkbox" name="checks[]" value="{{ usuario.id_maestrante }}"></td>
+                                {% endif %}
+                                <td>{{ usuario.procedencia_tema }}</td>
+                             
+                                <td>{{ usuario.avance_tesis }}</td>
+                                <td>{{ usuario.user.nombre_usuario }}</td>
+                                <td>{{ usuario.user.paterno }}</td>
+                                <td>{{ usuario.user.materno }}</td>
+                             
+                              
+                            </tr>
+
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</div>
+
+
+
+<div class="modal fade" id="edicion" role="dialog">
+
+</div>
+<div class="modal fade" id="eliminar" role="dialog">
+
+</div>
+<div class="modal fade" id="habilitar" role="dialog">
+
+</div>
+
+
+{% block extrajs %}
+
+<script src="{% static 'lib/js/data.js' %}"></script>
+<script src="{% static 'lib/js/check.js' %}"></script>
+<script src="{% static 'lib/js/fecha.js' %}"></script>
+<script src="{% static 'lib/js/mensaje.js' %}"></script>
+
+
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+    function abrir_modal(url) {
+        $('#edicion').load(url, function () {
+            $(this).modal('show');
+        });
+    }
+ 
+</script>
+
+
+
+{% endblock extrajs %}
+
+{% endblock %}

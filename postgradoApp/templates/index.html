@@ -1,0 +1,11 @@
+<!-- heredamos de la plantilla base-->
+
+{% extends "postgradoApp/base.html" %}
+<!-- cargamos toda la carpeta static -->
+{% load static %}
+{% block content %}
+<div id="layoutSidenav_content">
+<img src="{% static 'lib/img/img-fondo.png' %}" alt="User Avatar" class="img-size-10 mr-1 img-circle">
+</div>
+
+{% endblock %}

@@ -1,0 +1,86 @@
+
+<!-- heredamos de la plantilla base-->
+
+{% extends "postgradoApp/base.html" %}
+<!-- cargamos toda la carpeta static -->
+{% load static %}
+
+{% block content %}
+
+
+
+<div class="card-body">
+
+    <div class="sb-nav-link-icon"><h3><i class="far fa-id-card"></i>  Cronograma</h3></div>
+
+    <p class="card-text">
+ 
+ 
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+  
+            
+
+                <table name="f1" id="data" class="table table-striped table-responsive">
+
+                    <thead>
+                        <tr>
+                           
+                           
+                            <th class="header" scope="col">Nombre </th>
+                            <th class="header" scope="col">Formulario de habilitación</th>
+                            <th class="header" scope="col">Entrega de perfil de Tesis</th>
+                            <th class="header" scope="col">Acto de sustentación de tema</th>
+                            <th class="header" scope="col">Desarrollo de la investigación</th>
+                                            
+                        </tr>
+                    </thead>
+                    
+
+
+                    <tbody id="tableBody_users">
+                        {% if user.tipo_usuario == 1 %}
+                        <tr>
+                       
+                            <td>{{ user.nombre_usuario }} {{ user.paterno }} {{ user.materno }}</td>
+                            <td>{{ user.maestrante.fecha_formulario}}</td>
+                            <td>{{ user.maestrante.fecha_perfil}}</td>
+                            <td>{{ user.maestrante.fecha_sustentacion}}</td>
+                            <td>{{ user.maestrante.fecha_desarrollo}}</td>
+                           
+                        </tr>
+                        {% else %}
+                        {% for usuario in actividades %}
+                        <tr>
+                       
+                        <td>{{ usuario.user.nombre_usuario }} {{ usuario.user.paterno }} {{ usuario.user.materno }}</td>
+                        <td>{{ usuario.fecha_formulario}}</td>
+                        <td>{{ usuario.fecha_perfil}}</td>
+                        <td>{{ usuario.fecha_sustentacion}}</td>
+                        <td>{{ usuario.fecha_desarrollo}}</td>
+                       
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+    
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</div>
+{% block extrajs %}
+
+<script src="{% static 'lib/js/data.js' %}"></script>
+<script src="{% static 'lib/js/check.js' %}"></script>
+
+<script src="{% static 'lib/js/mensaje.js' %}"></script>
+
+{% endblock extrajs %}
+
+{% endblock %}
+

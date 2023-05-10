@@ -1,0 +1,42 @@
+{% load static %}
+<div class="modal-dialog " role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Editar información de: {{ object.nombre_usuario }}&nbsp;{{ object.paterno }}&nbsp;{{ object.materno }}  </h3>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        {% if object.tipo_usuario == Null %}
+        <form  action="{% url 'usuario:editar_usuario' object.id %}" method="POST" enctype="multipart/form-data">
+        {% endif %}  
+        {% if object.tipo_usuario == 1 %}
+        <form  action="{% url 'usuario:editar_maestrante' object.id %}" method="POST" enctype="multipart/form-data">
+        {% endif %}  
+        {% if object.tipo_usuario == 2 %}
+        <form  action="{% url 'usuario:editar_docente' object.id %}" method="POST" enctype="multipart/form-data">
+        {% endif %}
+
+        {% if object.tipo_usuario == 3 %}
+        <form  action="{% url 'usuario:editar_tecnico' object.id %}" method="POST" enctype="multipart/form-data">
+        {% endif %}  
+        {% if object.tipo_usuario == 4 %}
+        <form  action="{% url 'usuario:editar_investigacion' object.id %}" method="POST" enctype="multipart/form-data">
+        {% endif %}  
+        {% if object.tipo_usuario == 5 %}
+        <form  action="{% url 'usuario:editar_postgrado' object.id %}" method="POST" enctype="multipart/form-data">
+        {% endif %}  
+        
+            {% csrf_token %}
+            <div class="modal-body">
+                <div id="erroresEdicion">                
+                </div>
+                <td>{{ form.as_p }}</td> 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger  btn-circle btn-sm" data-bs-dismiss="modal">Cerrar</button>
+                <button  type="submit" class="btn btn-success  btn-circle btn-sm" >Confirmar</button>
+                
+
+            </div>
+        </form>
+    </div>
+</div>

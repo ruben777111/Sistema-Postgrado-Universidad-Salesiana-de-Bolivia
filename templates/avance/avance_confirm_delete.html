@@ -1,0 +1,26 @@
+<div class="modal-dialog " role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">¿ Desea eliminar los datos de: ?</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+      
+        <form  action="{% url 'avance:eliminar_avance' object.id_avance %}" method="POST" enctype="multipart/form-data">
+        
+            {% csrf_token %}
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger  btn-circle btn-sm" data-bs-dismiss="modal">Cancelar</button>
+             
+                <button type="submit" class="btn btn-success  btn-circle btn-sm btnEliminacion" >Confirmar</button>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+     
+
+         
+
+

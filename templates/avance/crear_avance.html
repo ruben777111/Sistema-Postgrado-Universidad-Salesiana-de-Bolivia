@@ -1,0 +1,34 @@
+<!-- heredamos de la plantilla base-->
+
+{% extends "postgradoApp/base.html" %}
+<!-- cargamos toda la carpeta static -->
+{% load static %}
+{% block content %}
+
+
+<div class="large-popup">
+    <div>
+        <div>
+            <div class="small-profilepic" style="background-image: url(/media/{{user.profile_pic}});"></div>
+        </div>
+        <div class="form-area">
+            <form action="{ url 'createpost' %}" method="POST" class="newpost" enctype="multipart/form-data">
+                {% csrf_token %}
+                <textarea name="text" autofocus placeholder="Escribir punto de avance" rows="5" id="post-text"></textarea>
+                    
+                    <div>
+                        <button class="btn btn-light float-right cancel-post" type="button" onclick="remove_popup()">Cancelar</button>
+                        <input type="submit" class="btn btn-success float-right submit-btn" value="&nbsp;Aceptar&nbsp;" >
+                    </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+                                        
+
+
+

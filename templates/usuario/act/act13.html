@@ -1,0 +1,114 @@
+<!-- heredamos de la plantilla base-->
+
+{% extends "postgradoApp/base.html" %}
+<!-- cargamos toda la carpeta static -->
+{% load static %}
+
+{% block content %}
+
+
+
+
+
+
+<div class="card-body">
+    
+    {% if user.tipo_usuario == 4 %}
+    <div class="sb-nav-link-icon"><h4><i class="far fa-id-card"></i>Derivación de Tesis a coordinación de postgrado para su habilitación a defensa</h4></div>
+
+
+    
+    {% endif %}
+    
+    {% if user.tipo_usuario == 5 %}
+    <div class="sb-nav-link-icon"><h4><i class="far fa-id-card"></i>Gestión administrativa para habilitación a defensa de Tesis</h4></div>
+    <div class="sb-nav-link-icon"><h4><i class="far fa-id-card"></i>Programación de defensa de tesis y comunicación a coordinación de investigación del cronograma de defensa y presentación de tesis</h4></div>
+    
+    {% endif %}
+    {% if user.tipo_usuario == 3 %}
+    <div class="sb-nav-link-icon"><h4><i class="far fa-id-card"></i>Envío y/o publicación de información para preparación y presentación de defensa de tesis</h4></div>
+
+
+    
+    {% endif %}
+    <p class="card-text">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <table id="data" class="table table-striped table-responsive">
+
+                    <thead>
+                        <tr>
+                            
+      
+
+                            <th class="header" scope="col">Nombre</th>
+                            <th class="header" scope="col">Apellido&nbsp;Paterno</th>
+                            <th class="header" scope="col">Apellido&nbsp;Materno</th>
+                            
+  
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody_users">
+                        {% for usuario in actividades %}
+                                         
+                        <tr>
+                           
+                    
+           
+                    
+                            <td>{{ usuario.nombre_usuario }}</td>
+                            <td>{{ usuario.paterno }}</td>
+                            <td>{{ usuario.materno }}</td>
+                           
+                          
+                            
+
+                            
+
+                        </tr>
+                     
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</div>
+
+
+
+
+<div class="modal fade" id="edicion" role="dialog">
+
+</div>
+<div class="modal fade" id="eliminar" role="dialog">
+
+</div>
+
+{% block extrajs %}
+
+<script src="{% static 'lib/js/data.js' %}"></script>
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+    function abrir_modal_editar_usuario(url) {
+        $('#edicion').load(url, function () {
+            $(this).modal('show');
+        });
+    }
+    function abrir_modal_eliminar_usuario(url) {
+        $('#eliminar').load(url, function () {
+            $(this).modal('show');
+        });
+    }
+
+
+</script>
+
+
+{% endblock extrajs %}
+
+{% endblock %}

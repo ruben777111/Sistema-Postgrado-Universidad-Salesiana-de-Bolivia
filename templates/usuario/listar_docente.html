@@ -1,0 +1,140 @@
+<!-- heredamos de la plantilla base-->
+
+{% extends "postgradoApp/base.html" %}
+<!-- cargamos toda la carpeta static -->
+{% load static %}
+
+{% block content %}
+
+
+
+<div class="sb-nav-link-icon"><h2><i class="far fa-id-card"></i> Lista de Docentes</h2></div>
+
+<div class="card-body">
+ 
+    <h5 class="card-title"><a href="{% url 'usuario:registrar_docente'%}" class="btn btn-primary"><i
+    class="fas fa-user-plus"></i> Agregar nuevo Docente</a></h5>
+   
+    <p class="card-text">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <table id="data" class="table table-striped table-responsive">
+
+                    <thead>
+                        <tr>
+                            
+                            <th>
+                                <div class="size"> Opciónes&nbsp;de&nbsp;usuario</div>
+                            </th>
+                  
+                            
+
+                            <th class="header" scope="col">Nombre</th>
+                            <th class="header" scope="col">Apellido&nbsp;Paterno</th>
+                            <th class="header" scope="col">Apellido&nbsp;Materno</th>
+                            <th class="header" scope="col">Campo&nbsp;de&nbsp;especialidad</th>
+                          
+                            <th class="header" scope="col">Nº&nbsp;de&nbsp;celular</th>
+                            <th class="header" scope="col">Nº&nbsp;de&nbsp;celular&nbsp;2</th>
+                       
+                            <th class="header" scope="col">Ci</th>
+                            <th class="header" scope="col">Departamento</th>
+                            <th class="header" scope="col">Correo&nbsp;electronico</th>
+                            
+
+                            <th class="header" scope="col">Fecha&nbsp;de&nbsp;incorporación</th>
+                          
+
+  
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody_users">
+                        {% for usuario in object_list%}
+                                         
+                        <tr>
+                           
+                            <td><button onclick="abrir_modal_editar_usuario('{% url 'usuario:editar_usuario' usuario.user.id %}')"
+                                
+                                    class="btn btn-warning"><i class="fa-solid fa-pen"></i></button>
+                                <button
+                                    onclick="abrir_modal_eliminar_usuario('{% url 'usuario:eliminar_usuario' usuario.id_docente %}')"
+                                    class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+                                
+                                    <button
+                                    onclick="abrir_modal_habilitar_guia_revisor('{% url 'usuario:habilitar_guia_revisor' usuario.id_docente %}')"
+                                    class="btn btn-primary"><i class="fas fa-file-alt"></i></button>
+                                    
+                               
+                            </td>
+           
+                    
+                            <td>{{ usuario.user.nombre_usuario }}</td>
+                            <td>{{ usuario.user.paterno }}</td>
+                            <td>{{ usuario.user.materno }}</td>
+                            <td>{{ usuario.user.descripcion }}</td>
+
+                       
+                       
+                            <td>{{ usuario.user.cel_usuario }}</td>
+                            <td>{{ usuario.user.cel_usuario2 }}</td>
+                            <td>{{ usuario.user.ci_usuario }}</td>
+                            <td>{{ usuario.user.departamento }}</td>
+                            <td>{{ usuario.user.correo }}</td>
+                            <td>{{ usuario.user.fecha_registro }}</td>
+
+                            
+
+                        </tr>
+                     
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</div>
+
+
+
+
+<div class="modal fade" id="edicion" role="dialog">
+
+</div>
+<div class="modal fade" id="eliminar" role="dialog">
+
+</div>
+<div class="modal fade" id="habilitar" role="dialog">
+
+</div>
+
+{% block extrajs %}
+
+<script src="{% static 'lib/js/data.js' %}"></script>
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+    function abrir_modal_editar_usuario(url) {
+        $('#edicion').load(url, function () {
+            $(this).modal('show');
+        });
+    }
+    function abrir_modal_eliminar_usuario(url) {
+        $('#eliminar').load(url, function () {
+            $(this).modal('show');
+        });
+    }
+
+    function abrir_modal_habilitar_guia_revisor(url) {
+        $('#habilitar').load(url, function () {
+            $(this).modal('show');
+        });
+    }
+</script>
+
+
+{% endblock extrajs %}
+
+{% endblock %}

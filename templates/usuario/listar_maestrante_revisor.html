@@ -1,0 +1,100 @@
+<!-- heredamos de la plantilla base-->
+
+{% extends "postgradoApp/base.html" %}
+<!-- cargamos toda la carpeta static -->
+{% load static %}
+
+{% block content %}
+
+
+
+<div class="sb-nav-link-icon"><h2><i class="far fa-id-card"></i> Lista de equipos Maestrantes -  Revisor</h2></div>
+
+<div class="card-body">
+ 
+
+    <p class="card-text">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <table id="data" class="table table-striped table-responsive">
+
+                    <thead>
+                        <tr>
+                            
+                            <th>
+                                <div class="size"> Opciónes&nbsp;de&nbsp;usuario</div>
+                            </th>
+                  
+                            
+
+                            <th class="header" scope="col">Maestrante</th>
+                            <th class="header" scope="col">Docente Revisor</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody_users">
+                        {% for usuario in object_list%}
+                                         
+                        <tr>
+                           
+                           
+           
+                    
+                            <td>{{ usuario.maestrante }}</td>
+
+                            
+                            <td>{{ usuario.docente }}</td>
+                            <td>{{ usuario.tema_tesis }}</td>
+         
+                   
+
+                            
+
+                        </tr>
+                     
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</div>
+
+
+
+
+<div class="modal fade" id="edicion" role="dialog">
+
+</div>
+<div class="modal fade" id="eliminar" role="dialog">
+
+</div>
+
+{% block extrajs %}
+
+<script src="{% static 'lib/js/data.js' %}"></script>
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+    function abrir_modal_editar_usuario(url) {
+        $('#edicion').load(url, function () {
+            $(this).modal('show');
+        });
+    }
+    function abrir_modal_eliminar_usuario(url) {
+        $('#eliminar').load(url, function () {
+            $(this).modal('show');
+        });
+    }
+
+
+</script>
+
+
+{% endblock extrajs %}
+
+{% endblock %}

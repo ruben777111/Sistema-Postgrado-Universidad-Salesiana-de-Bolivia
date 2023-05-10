@@ -1,0 +1,45 @@
+      
+      {% load static %}
+
+      <!DOCTYPE html>
+      <html lang="en">
+          <head>
+              <title>SISTEMA POSTGRADO USB</title>
+              <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+              <link href="{% static 'lib/css/styles2.css' %}" rel="stylesheet">
+          
+          </head>
+          <body>
+              <div class="container">
+                  <div class="user-box">
+
+
+                        <div class="card border-light  mb-3" >
+                            <div class="card-header"><img class="card-img-top" src="{% static 'lib/img/img-fondo3.png' %}" alt="Card image cap"></div>
+                            <div class="card-body text-primary">
+
+                              <p class="card-text">
+                                
+
+                                <form action="" method="POST" id="form-login">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <input class="form-control inp usrnm" type="text" name="username" placeholder="Nombre de Usuario" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control inp pswd" type="password" name="password" placeholder="Contraseña" required>
+                                    </div>
+                            
+                                    <input class="btn btn-primary text-center" type="submit" value="Iniciar sesión"
+                                        style="margin-top: 10px; width: 95%;">
+                            
+                                </form>
+                              </p>
+                            </div>
+                          </div>
+              
+                        </div>
+              </div>
+          </body>
+      </html>
+      
